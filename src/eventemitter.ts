@@ -1,10 +1,8 @@
 
 export type RandEvent = {
     status: string;
-    details: {
-        eventName: string;
-        eventNum: number;
-    }
+    eventName: string;
+    eventNum: number;
 }
 
 export class EventEmitter {
@@ -32,22 +30,12 @@ export class EventEmitter {
     public getEvents(): RandEvent[] {
         let events: RandEvent[] = new Array(this._eventNumber);
         for (let i = 0; i < this._eventNumber; i++) {
-            let newEvent: RandEvent = {
-                status: "success",
-                details: {
-                    eventName: EventEmitter.eventNames[Math.floor(Math.random() * 3)],
-                    eventNum: Math.floor(Math.random() * 20)
-                }
-            };
-
-            // want mostly successes
-            if (Math.floor(Math.random() * 10) < 3) {
-                newEvent.status = "failure";
-            }
-
-
             // add event to array
-            events[i] = newEvent as RandEvent;
+            events[i] = {
+                status: (Math.floor(Math.random() * 10) < 3) ? "success" : "failure" ,
+                eventName: EventEmitter.eventNames[Math.floor(Math.random() * 3)],
+                eventNum: Math.floor(Math.random() * 20)
+            };
         }
 
         return events;
